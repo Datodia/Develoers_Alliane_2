@@ -43,6 +43,14 @@ function isValidInput(name, surname, address) {
     return true;
 }
 
+function isAboutFill() {
+    if (aboutInput.value != "") {
+        return "Filled"
+    } else {
+        return 'Dont Filled'
+    }
+}
+
 
 function draw() {
 
@@ -79,8 +87,32 @@ function draw() {
     userContainer.appendChild(userSexTag)
 
     const userAboutTag = document.createElement("h1")
-    userAboutTag.textContent = `About:  ${userFromLocalStorage[counter - userContainer.id].about}`
+    userAboutTag.textContent = 'About: ' + isAboutFill()
     userContainer.appendChild(userAboutTag)
+
+    let open = document.createElement('button')
+    open.textContent = "Open Note"
+    userContainer.appendChild(open)
+    open.onclick = function () {
+        dialog.showModal()
+        dialog.classList.toggle('showDialog')
+    }
+
+
+
+    let dialog = document.createElement('dialog')
+    dialog.textContent = `About:   ${userFromLocalStorage[counter - userContainer.id].about}`
+    userContainer.appendChild(dialog)
+
+    let close = document.createElement('button')
+    close.textContent = "Close"
+    dialog.appendChild(close)
+    close.onclick = function () {
+        dialog.close();
+        dialog.classList.toggle('showDialog')
+    }
+
+
 
     const deleteButton = document.createElement("button")
     deleteButton.textContent = "Delete"
@@ -137,20 +169,8 @@ function onSumbit(event) {
 
     draw();
 
-
-
-    // console.log(isValidValues)
 }
 
 
 window.addEventListener('load', draw);
-
-// function drawTest() {
-//     let data = JSON.parse(localStorage.getItem('userData'))
-
-//     for (let i = 0; i < data.length; i++) {
-//         draw()
-
-//     }
-// }
 
